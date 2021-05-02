@@ -164,7 +164,7 @@ body {
 .table {
   width: 100%;
   overflow: auto;
-  height: 665px;
+  height: 652px;
 }
 
 .table thead th {
@@ -271,5 +271,23 @@ h1 {
 
 .charts-wrapper img {
   width: 50%;
+}
+
+.sport {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding-top: 50px;
+}
+
+.sport img {
+  height: 530px;
 }
 /*# sourceMappingURL=index.css.map */

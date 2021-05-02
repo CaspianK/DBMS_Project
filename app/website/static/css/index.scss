@@ -134,7 +134,7 @@ body {
 .table {
   width: 100%;
   overflow: auto;
-  height: 665px;
+  height: 652px;
   thead {
     th {
       position: sticky;
@@ -218,5 +218,15 @@ h1 {
     img {
       width: 50%;
     }
+  }
+}
+
+.sport {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 50px;
+  img {
+    height: 530px;
   }
 }

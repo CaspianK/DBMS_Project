@@ -129,7 +129,7 @@ def sport(sport):
     cursor = connection.cursor()
     cursor.execute("SELECT * FROM SPORTS WHERE SPORT = :sport", sport=sport)
     sport = list(cursor.fetchone())
-    blob = sport[1].read()
+    blob = b64encode(sport[1].read()).decode()
     response = make_response(blob)
     response.headers["Content-type"] = "image/jpeg"
     return render_template('sport.html', sport=sport, image=blob)
