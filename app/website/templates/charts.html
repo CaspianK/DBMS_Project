@@ -1,0 +1,12 @@
+<!-- prettier-ignore -->
+{% extends "base.html" %}
+{% block title %}Charts{% endblock %}
+{% block content%}
+<div class="charts">
+  <h1 class="text center">Charts</h1>
+  <div class="charts-wrapper">
+    <img src="{{ url_for('static', filename='img/bar.png') }}" alt="Chart" />
+    <img src="{{ url_for('static', filename='img/pie.png') }}" alt="Chart" />
+  </div>
+</div>
+{% endblock %}

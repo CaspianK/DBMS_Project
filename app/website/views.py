@@ -2,6 +2,8 @@ from flask import Blueprint, render_template, request, flash, redirect, url_for,
 from base64 import b64encode
 import sys, os
 from . import pool
+import numpy as np
+import matplotlib.pyplot as plt, mpld3
 
 views = Blueprint('views', __name__)
 
@@ -131,3 +133,45 @@ def sport(sport):
     response = make_response(blob)
     response.headers["Content-type"] = "image/jpeg"
     return render_template('sport.html', sport=sport, image=blob)
+
+@views.route('athletes/charts')
+def charts():
+    connection = pool.acquire()
+    cursor = connection.cursor()
+    cursor.execute("select 10 from dual")
+    for row in cursor:
+        totalemps=row[0]
+    t=np.arange(totalemps)
+    cursor.execute("SELECT * FROM (SELECT noc, count(medal) as count FROM athletes GROUP BY noc ORDER BY count DESC) WHERE ROWNUM <= 10")
+    nocs=[]
+    count=[]
+    for row in cursor:
+        nocs.append(row[0])
+        count.append(row[1])
+    bar_width=0.5
+    plt.bar(t,count,bar_width,label="Count")
+    plt.title("Top 10 countries by number of medals")
+    plt.xlabel("Country")
+    plt.ylabel("Count")
+    plt.xticks(t,nocs)
+    plt.grid(True)
+    plt.legend()
+    xs=[x for x in range(0,totalemps)]
+    for x,y in zip(xs,count):
+        plt.annotate(count[x],(x-bar_width/1.5,y))
+    plt.savefig('website/static/img/bar.png')
+    plt.cla()
+    cursor.execute("select COUNT(DISTINCT(medal))+1 from athletes")
+    for row in cursor:
+        totalemps=row[0]
+    cursor.execute("select case when medal IS NULL THEN 'No Medals' ELSE medal END AS medal, count(*) from athletes group by medal")
+    medals=[]
+    count=[]
+    for row in cursor:
+        medals.append(row[0])
+        count.append(row[1])
+    explode=[0.2 if count[x]==max(count) else 0 for x in np.arange(0,totalemps)]
+    plt.pie(count,explode=explode,labels=medals,autopct="%1.1f%%",shadow=True)
+    plt.savefig('website/static/img/pie.png')
+    plt.switch_backend('agg')
+    return render_template('charts.html')

@@ -258,4 +258,18 @@ h1 {
 .athlete {
   padding-top: 70px;
 }
+
+.charts {
+  padding-top: 100px;
+}
+
+.charts-wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.charts-wrapper img {
+  width: 50%;
+}
 /*# sourceMappingURL=index.css.map */

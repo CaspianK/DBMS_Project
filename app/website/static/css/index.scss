@@ -210,3 +210,13 @@ h1 {
 .athlete {
   padding-top: 70px;
 }
+
+.charts {
+  padding-top: 100px;
+  &-wrapper {
+    display: flex;
+    img {
+      width: 50%;
+    }
+  }
+}
