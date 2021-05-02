@@ -75,7 +75,7 @@ def add():
 def delete(id):
     connection = pool.acquire()
     cursor = connection.cursor()
-    cursor.execute("DELETE FROM ATHLETES WHERE ID = :id", id=id)
+    cursor.callproc("del_ath", [id])
     connection.commit()
     connection.close()
     return redirect(url_for('views.athletes'))
