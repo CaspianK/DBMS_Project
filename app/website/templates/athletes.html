@@ -1,0 +1,120 @@
+<!-- prettier-ignore -->
+{% extends "base.html" %}
+{% block title %}Athletes{% endblock %}
+{% block content%}
+<div class="data">
+  <div class="options">
+    <a href="http://127.0.0.1:5000/athletes/add" class="link text">Add</a>
+    <select name="sort" id="sort" class="text select">
+      <option selected disabled>Sort By</option>
+      <option value="http://127.0.0.1:5000/athletes/name/page/{{page}}">
+        Name
+      </option>
+      <option value="http://127.0.0.1:5000/athletes/age/page/{{page}}">
+        Age
+      </option>
+      <option value="http://127.0.0.1:5000/athletes/height/page/{{page}}">
+        Height
+      </option>
+      <option value="http://127.0.0.1:5000/athletes/weight/page/{{page}}">
+        Weight
+      </option>
+      <option value="http://127.0.0.1:5000/athletes/bmi/page/{{page}}">
+        BMI
+      </option>
+    </select>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+      $(function () {
+        $("#sort").on("change", function () {
+          var url = $(this).val();
+          if (url) {
+            window.location = url;
+          }
+          return false;
+        });
+      });
+    </script>
+  </div>
+  <div class="table">
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Sex</th>
+          <th>Age</th>
+          <th>Height</th>
+          <th>Weight</th>
+          <th>BMI</th>
+          <th>Team</th>
+          <th>NOC</th>
+          <th>Games</th>
+          <th>City</th>
+          <th>Sport</th>
+          <th>Medal</th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for athlete in athletes %}
+        <tr>
+          <td>
+            <a
+              class="text link"
+              href="http://127.0.0.1:5000/athletes/{{ athlete[0] }}"
+              >{{ athlete[1] }}</a
+            >
+          </td>
+          <td>{{ athlete[2] }}</td>
+          <td>{{ athlete[3] }}</td>
+          <td>{{ athlete[4] }} ({{ athlete[5] }})</td>
+          <td>{{ athlete[6] }} ({{ athlete[7] }})</td>
+          <td>{{ athlete[8] }}</td>
+          <td>{{ athlete[9] }}</td>
+          <td>{{ athlete[10] }}</td>
+          <td>{{ athlete[11] }}</td>
+          <td>{{ athlete[14] }}</td>
+          <td>
+            <a
+              href="http://127.0.0.1:5000/sports/{{ athlete[15] }}"
+              class="text link"
+              >{{ athlete[15] }}</a
+            >
+          </td>
+          <td>{{ athlete[17] }}</td>
+          <td>
+            <a
+              href="http://127.0.0.1:5000/athletes/edit/{{ athlete[0] }}"
+              class="text link"
+              >Edit</a
+            >
+          </td>
+          <td>
+            <a
+              href="http://127.0.0.1:5000/athletes/delete/{{ athlete[0] }}"
+              class="text link"
+              >Delete</a
+            >
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <div class="pagination">
+    {% if page > 0 %}
+    <a
+      href="http://127.0.0.1:5000/athletes/{{ sort }}/page/{{page-1}}"
+      class="link text"
+      >Previous</a
+    >
+    {% endif %}
+    <a
+      href="http://127.0.0.1:5000/athletes/{{ sort }}/page/{{page+1}}"
+      class="link text"
+      >Next</a
+    >
+  </div>
+</div>
+{% endblock %}

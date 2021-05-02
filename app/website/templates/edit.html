@@ -1,0 +1,118 @@
+<!-- prettier-ignore -->
+{% extends "base.html" %}
+{% block title %}Edit Data{% endblock %}
+{% block content%}
+<div class="form-wrapper">
+  <h1 class="text center">Edit Data</h1>
+  <form action="" method="POST" class="form">
+    <input type="text" name="id" id="id" required hidden value="{{ id }}" />
+    <input
+      class="text input"
+      type="text"
+      name="name"
+      id="name"
+      required
+      value="{{ athlete[1] }}"
+    />
+    <input
+      type="text"
+      class="text input"
+      name="sex"
+      id="sex"
+      required
+      value="{{ athlete[2] }}"
+    />
+    <input
+      type="text"
+      class="text input"
+      name="age"
+      id="age"
+      value="{{ athlete[3] }}"
+    />
+    <input
+      type="text"
+      class="text input"
+      name="height"
+      id="height"
+      value="{{ athlete[4] }}"
+    />
+    <input
+      type="text"
+      class="text input"
+      name="weight"
+      id="weight"
+      value="{{ athlete[6] }}"
+    />
+    <input
+      type="text"
+      class="text input"
+      name="team"
+      id="team"
+      required
+      value="{{ athlete[9] }}"
+    />
+    <select name="noc" id="noc" class="text input">
+      <option value="{{ athlete[10] }}" selected>{{ athlete[10] }}</option>
+      {% for noc in nocs %}
+      <option value="{{ noc[0] }}">{{ noc[0] }}</option>
+      {% endfor %}
+    </select>
+    <input
+      type="text input"
+      type="text input"
+      class="text input"
+      type="text"
+      name="games"
+      id="games"
+      required
+      value="{{ athlete[11] }}"
+    />
+    <input
+      type="text"
+      class="text input"
+      name="year"
+      id="year"
+      required
+      value="{{ athlete[12] }}"
+    />
+    <input
+      type="text"
+      class="text input"
+      name="season"
+      id="season"
+      required
+      value="{{ athlete[13] }}"
+    />
+    <input
+      type="text"
+      class="text input"
+      name="city"
+      id="city"
+      required
+      value="{{ athlete[14] }}"
+    />
+    <select name="sport" id="sport" class="text input">
+      <option value="{{ athlete[15] }}" selected>{{ athlete[15] }}</option>
+      {% for sport in sports %}
+      <option value="{{ sport[0] }}">{{ sport[0] }}</option>
+      {% endfor %}
+    </select>
+    <input
+      type="text"
+      class="text input"
+      name="event"
+      id="event"
+      required
+      value="{{ athlete[16] }}"
+    />
+    <input
+      type="text"
+      class="text input"
+      name="medal"
+      id="medal"
+      value="{{ athlete[17] }}"
+    />
+    <button type="submit" class="link text btn">Edit</button>
+  </form>
+</div>
+{% endblock %}

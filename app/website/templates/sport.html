@@ -1,0 +1,9 @@
+<!-- prettier-ignore -->
+{% extends "base.html" %}
+{% block title %}{{ sport[0] }}{% endblock %}
+{% block content%}
+<div class="sport">
+  <h1 class="center text">{{ sport[0] }}</h1>
+  <img src="data:image/jpeg;base64,{{ image }}" alt="" />
+</div>
+{% endblock %}

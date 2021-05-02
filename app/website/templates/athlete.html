@@ -1,0 +1,31 @@
+<!-- prettier-ignore -->
+{% extends "base.html" %}
+{% block title %}{{ athlete[1] }}{% endblock %}
+{% block content%}
+<div class="athlete">
+  <h1 class="center text">{{ athlete[1] }}</h1>
+  <div class="options">
+    <a
+      href="http://127.0.0.1:5000/athletes/edit/{{ athlete[0] }}"
+      class="text link"
+      >Edit</a
+    ><a
+      href="http://127.0.0.1:5000/athletes/delete/{{ athlete[0] }}"
+      class="text link"
+      >Delete</a
+    >
+  </div>
+  <h2 class="text">Info:</h2>
+  <p class="text">Sex: <span>{{ athlete[2] }}</span></p>
+  <p class="text">Age: <span>{{ athlete[3] }}</span></p>
+  <p class="text">Height: <span>{{ athlete[4] }}</span></p>
+  <p class="text">Weight: <span>{{ athlete[6] }}</span></p>
+  <p class="text">BMI: <span>{{ athlete[8] }}</span></p>
+  <p class="text">Team: <span>{{ athlete[9] }}</span></p>
+  <p class="text">NOC: <span>{{ athlete[10] }}</span></p>
+  <p class="text">Games: <span>{{ athlete[11] }}</span></p>
+  <p class="text">City: <span>{{ athlete[14] }}</span></p>
+  <p class="text">Sport: <span>{{ athlete[15] }}</span></p>
+  <p class="text">Medal: <span>{{ athlete[17] }}</span></p>
+</div>
+{% endblock %}

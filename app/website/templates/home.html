@@ -1,0 +1,36 @@
+<!-- prettier-ignore -->
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block content%}
+<div class="intro">
+  <div class="container intro__container">
+    <div class="intro__text text">
+      <div class="intro__welcome">
+        <h1>The stats you need</h1>
+        <p>
+          Get the latest data on the olympic athletes right now! Lorem ipsum
+          dolor sit amet, consectetur adipiscing elit. Fusce eu elit tincidunt,
+          varius enim eu, congue elit. Suspendisse in pharetra nibh.
+        </p>
+      </div>
+      <div class="intro__buttons">
+        <a
+          href="https://www.kaggle.com/heesoo37/120-years-of-olympic-history-athletes-and-results"
+          class="link text"
+          >Our sources</a
+        >
+        <a href="http://127.0.0.1:5000/athletes" class="link text btn"
+          >Check the stats</a
+        >
+      </div>
+    </div>
+    <div>
+      <img
+        src="{{ url_for('static', filename='img/home.png') }}"
+        alt=""
+        class="intro__picture"
+      />
+    </div>
+  </div>
+</div>
+{% endblock %}

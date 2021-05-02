@@ -1,0 +1,121 @@
+<!-- prettier-ignore -->
+{% extends "base.html" %}
+{% block title %}Add Data{% endblock %}
+{% block content%}
+<div class="form-wrapper">
+  <h1 class="text center">Add Data</h1>
+  <form action="" method="POST" class="form">
+    <input
+      class="text input"
+      type="number"
+      name="id"
+      id="id"
+      placeholder="id"
+      required
+    />
+    <input
+      class="text input"
+      type="text"
+      name="name"
+      id="name"
+      placeholder="name"
+      required
+    />
+    <input
+      class="text input"
+      type="text"
+      name="sex"
+      id="sex"
+      placeholder="sex"
+      required
+    />
+    <input
+      class="text input"
+      type="number"
+      name="age"
+      id="age"
+      placeholder="age"
+    />
+    <input
+      class="text input"
+      type="number"
+      name="height"
+      id="height"
+      placeholder="height"
+    />
+    <input
+      class="text input"
+      type="number"
+      name="weight"
+      id="weight"
+      placeholder="weight"
+    />
+    <input
+      class="text input"
+      type="text"
+      name="team"
+      id="team"
+      placeholder="team"
+      required
+    />
+    <select name="noc" id="noc" class="text input">
+      {% for noc in nocs %}
+      <option value="{{ noc[0] }}">{{ noc[0] }}</option>
+      {% endfor %}
+    </select>
+    <input
+      class="text input"
+      type="text"
+      name="games"
+      id="games"
+      placeholder="games"
+      required
+    />
+    <input
+      class="text input"
+      type="number"
+      name="year"
+      id="year"
+      placeholder="year"
+      required
+    />
+    <input
+      class="text input"
+      type="text"
+      name="season"
+      id="season"
+      placeholder="season"
+      required
+    />
+    <input
+      class="text input"
+      type="text"
+      name="city"
+      id="city"
+      placeholder="city"
+      required
+    />
+    <select name="sport" id="sport" class="text input">
+      {% for sport in sports %}
+      <option value="{{ sport[0] }}">{{ sport[0] }}</option>
+      {% endfor %}
+    </select>
+    <input
+      class="text input"
+      type="text"
+      name="event"
+      id="event"
+      placeholder="event"
+      required
+    />
+    <input
+      class="text input"
+      type="text"
+      name="medal"
+      id="medal"
+      placeholder="medal"
+    />
+    <button type="submit" class="link text btn">Add</button>
+  </form>
+</div>
+{% endblock %}
