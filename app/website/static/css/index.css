@@ -204,9 +204,16 @@ body {
           align-items: center;
 }
 
-.options a {
+.options a,
+.options input,
+.options select {
   margin-right: 30px;
   font-weight: 700;
+}
+
+.options input {
+  margin-right: 10px;
+  width: 350px;
 }
 
 .form {

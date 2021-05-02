@@ -9,24 +9,28 @@ views = Blueprint('views', __name__)
 def home():
     return render_template("home.html")
 
-@views.route('/athletes', defaults={'sort': 'name', 'page': 0})
+@views.route('/athletes', defaults={'sort': 'name', 'page': 0}, methods=['GET', 'POST'])
 @views.route('/athletes/<string:sort>/page/<int:page>')
 def athletes(sort, page):
-    perpage = 500
-    startat = 1+perpage*page
-    endat = startat+perpage
     connection = pool.acquire()
     cursor = connection.cursor()
-    if sort == 'name':
-        cursor.execute("SELECT * FROM(SELECT a.*, Row_Number() OVER (ORDER BY name) MyRow FROM Athletes a) WHERE MyRow BETWEEN :startat AND :endat", startat=startat, endat=endat)
-    elif sort == 'age':
-        cursor.execute("SELECT * FROM(SELECT a.*, Row_Number() OVER (ORDER BY age) MyRow FROM Athletes a) WHERE MyRow BETWEEN :startat AND :endat", startat=startat, endat=endat)
-    elif sort == 'height':
-        cursor.execute("SELECT * FROM(SELECT a.*, Row_Number() OVER (ORDER BY height) MyRow FROM Athletes a) WHERE MyRow BETWEEN :startat AND :endat", startat=startat, endat=endat)
-    elif sort == 'weight':
-        cursor.execute("SELECT * FROM(SELECT a.*, Row_Number() OVER (ORDER BY weight) MyRow FROM Athletes a) WHERE MyRow BETWEEN :startat AND :endat", startat=startat, endat=endat)
-    elif sort == 'bmi':
-        cursor.execute("SELECT * FROM(SELECT a.*, Row_Number() OVER (ORDER BY bmi) MyRow FROM Athletes a) WHERE MyRow BETWEEN :startat AND :endat", startat=startat, endat=endat)
+    if request.method == "POST":
+        search = "%" + request.form['search'] + "%"
+        cursor.execute("SELECT * FROM ATHLETES WHERE NAME LIKE :search OR TEAM LIKE :search OR NOC LIKE :search OR CITY LIKE :search OR SPORT LIKE :search OR MEDAL LIKE :search", search=search)
+    else:
+        perpage = 500
+        startat = 1+perpage*page
+        endat = startat+perpage
+        if sort == 'name':
+            cursor.execute("SELECT * FROM(SELECT a.*, Row_Number() OVER (ORDER BY name) MyRow FROM Athletes a) WHERE MyRow BETWEEN :startat AND :endat", startat=startat, endat=endat)
+        elif sort == 'age':
+            cursor.execute("SELECT * FROM(SELECT a.*, Row_Number() OVER (ORDER BY age) MyRow FROM Athletes a) WHERE MyRow BETWEEN :startat AND :endat", startat=startat, endat=endat)
+        elif sort == 'height':
+            cursor.execute("SELECT * FROM(SELECT a.*, Row_Number() OVER (ORDER BY height) MyRow FROM Athletes a) WHERE MyRow BETWEEN :startat AND :endat", startat=startat, endat=endat)
+        elif sort == 'weight':
+            cursor.execute("SELECT * FROM(SELECT a.*, Row_Number() OVER (ORDER BY weight) MyRow FROM Athletes a) WHERE MyRow BETWEEN :startat AND :endat", startat=startat, endat=endat)
+        elif sort == 'bmi':
+            cursor.execute("SELECT * FROM(SELECT a.*, Row_Number() OVER (ORDER BY bmi) MyRow FROM Athletes a) WHERE MyRow BETWEEN :startat AND :endat", startat=startat, endat=endat)
     result = list(cursor.fetchall())
     return render_template("athletes.html", athletes=result, page=page, sort=sort)
 
