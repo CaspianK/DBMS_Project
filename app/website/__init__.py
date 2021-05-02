@@ -12,9 +12,9 @@ def init_session(connection, requestedTag_ignored):
     """)
 
 def start_pool():
-    os.environ['PYTHON_USERNAME'] = 'Project'
-    os.environ['PYTHON_PASSWORD'] = '52341'
-    os.environ['PYTHON_CONNECTSTRING'] = 'Laptop-Caspian'
+    os.environ['PYTHON_USERNAME'] = 'alisher'
+    os.environ['PYTHON_PASSWORD'] = 'asdqwe'
+    os.environ['PYTHON_CONNECTSTRING'] = 'REAL'
     pool_min = 4
     pool_max = 4
     pool_inc = 0

@@ -2,11 +2,29 @@ from flask import Blueprint, render_template, request, flash, redirect, url_for,
 from base64 import b64encode
 import sys, os
 from . import pool
+import matplotlib.pyplot as plt
+import numpy as np
+
+
 
 views = Blueprint('views', __name__)
 
-@views.route('/')
+@views.route('/', methods=['GET', 'POST'])
 def home():
+    if request.method == "POST":
+        name = request.form['name']
+        # search by author or book
+        conn = pool.acquire()
+        cursor = conn.cursor()
+        cursor.execute("SELECT name,team,noc,city,sport,medal from athletes WHERE name  LIKE :name OR team LIKE :team OR noc LIKE :noc OR city LIKE :city OR sport LIKE :sport OR medal LIKE :medal ", name=name,team=name,noc=name,city=name,sport=name,medal=name )
+        conn.commit()
+        data = cursor.fetchall()
+        # all in the search box will return all the tuples
+        if len(data) == 0 and name == 'all': 
+            cursor.execute("SELECT name,team,noc,city,sport,medal from athletes")
+            conn.commit()
+            data = cursor.fetchall()
+        return render_template('athletes.html', data=data) 
     return render_template("home.html")
 
 @views.route('/athletes', defaults={'sort': 'name', 'page': 0}, methods=['GET', 'POST'])
@@ -131,3 +149,48 @@ def sport(sport):
     response = make_response(blob)
     response.headers["Content-type"] = "image/jpeg"
     return render_template('sport.html', sport=sport, image=blob)
+
+@views.route('athletes/charts')
+def bar():
+    connection = pool.acquire()
+    cursor = connection.cursor()
+    cursor.execute("select 10 from dual")
+    for row in cursor:
+        totalemps=row[0]
+    t=np.arange(totalemps)
+    cursor.execute("SELECT * FROM (SELECT noc, count(medal) as count FROM athletes GROUP BY noc ORDER BY count DESC) WHERE ROWNUM <= 10")
+    nocs=[]
+    count=[]
+    for row in cursor:
+        nocs.append(row[0])
+        count.append(row[1])
+    bar_width=0.5
+    plt.bar(t,count,bar_width,label="Count")
+    plt.title("Top 10 countries by number of medals")
+    plt.xlabel("Country")
+    plt.ylabel("Count")
+    plt.xticks(t,nocs)
+    plt.grid(True)
+    plt.legend()
+    xs=[x for x in range(0,totalemps)]
+    for x,y in zip(xs,count):
+        plt.annotate(count[x],(x-bar_width/1.5,y))
+    plt.savefig('website/static/img/bar.png')
+    return render_template('chart.html') 
+    root.mainloop()
+def pie():
+    cursor = connection.cursor()
+    cursor.execute("select COUNT(DISTINCT(medal))+1 from athletes")
+    for row in cur:
+        totalemps=row[0]
+    cursor.execute("select case when medal IS NULL THEN 'No Medals' ELSE medal END AS medal, count(*) from athletes group by medal")
+    medals=[]
+    count=[]
+    for row in cur:
+        medals.append(row[0])
+        count.append(row[1])
+    explode=[0.2 if count[x]==max(count) else 0 for x in np.arange(0,totalemps)]
+    plt.pie(count,explode=explode,labels=medals,autopct="%1.1f%%",shadow=True)
+    plt.savefig('website/static/img/pie.png')
+    return render_template('chart.html') 
+    root.mainloop()

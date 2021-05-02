@@ -2,9 +2,26 @@
 {% extends "base.html" %}
 {% block title %}Athletes{% endblock %}
 {% block content%}
+<h1><center>SEARCH</center></h1>
+    <form class="example" method="post" action="/" 
+     style="margin:auto;max-width:600px">
+        <input type="text" placeholder="Search by athlete's information" name="name">
+        <button type="submit"><i class="fa fa-search">SEARCH</i>
+        </button>
+    </form>
+    <p></p>
+    <center>
+    {% for item in data %}
+        <tr>
+            <td> <strong>NAME:</strong>{{item[0]}},  <strong>TEAM:</strong>{{item[1]}},  <strong>NOC:</strong>{{item[2]}},  <strong>CITY:</strong>{{item[3]}},  <strong>SPORT:</strong>{{item[4]}},  <strong>MEDAL:</strong>{{item[5]}}</td>
+            </br>
+        </tr>
+    {% endfor %}
+    </center>
 <div class="data">
   <div class="options">
     <a href="http://127.0.0.1:5000/athletes/add" class="link text">Add</a>
+    <a href="http://127.0.0.1:5000/athletes/charts" class="link text">Chart</a>
     <select name="sort" id="sort" class="text select">
       <option selected disabled>Sort By</option>
       <option value="http://127.0.0.1:5000/athletes/name/page/{{page}}">
